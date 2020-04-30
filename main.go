@@ -28,7 +28,7 @@ func main() {
 
 	route.GET("/users", userAPI.FindAll)
 
-	err := route.Run("8080")
+	err := route.Run()
 	if err != nil {
 		log.Fatalln(err)
 	}
