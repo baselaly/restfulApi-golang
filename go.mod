@@ -1,4 +1,4 @@
-module rest-gin-gorm
+module go_restful
 
 go 1.14
 
