@@ -28,6 +28,7 @@ func main() {
 
 	route.GET("/users", userAPI.FindAll)
 	route.GET("/user/:id", userAPI.FindByID)
+	route.POST("/user/create", userAPI.Create)
 
 	err := route.Run()
 	if err != nil {

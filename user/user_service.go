@@ -23,6 +23,6 @@ func (userService *UserService) Delete(id int) bool {
 	return userService.UserRepository.Delete(id)
 }
 
-func (userService *UserService) Create(user User) User {
+func (userService *UserService) Create(user User) (User, error) {
 	return userService.UserRepository.Create(user)
 }

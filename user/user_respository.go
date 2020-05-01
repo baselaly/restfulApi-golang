@@ -25,9 +25,12 @@ func (u *UserRepository) FindByID(id int) User {
 	return user
 }
 
-func (u *UserRepository) Create(user User) User {
-	u.DB.Create(&user)
-	return user
+func (u *UserRepository) Create(user User) (User, error) {
+	err := u.DB.Create(&user).Error
+	if err != nil {
+		return User{}, err
+	}
+	return user, nil
 }
 
 func (u *UserRepository) Delete(id int) bool {
