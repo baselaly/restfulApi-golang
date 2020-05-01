@@ -16,7 +16,7 @@ func ProvideUserApi(u UserService) UserApi {
 
 func (userApi *UserApi) FindAll(c *gin.Context) {
 	users := userApi.userService.GetAll()
-	c.JSON(http.StatusOK, gin.H{"users": users})
+	c.JSON(http.StatusOK, gin.H{"users": ToUserDtos(users)})
 }
 
 func (userApi *UserApi) FindById(c *gin.Context) string {

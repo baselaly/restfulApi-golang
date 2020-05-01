@@ -25,8 +25,8 @@ func ToUser(userdto UserDto) User {
 func ToUsers(userdtos []UserDto) []User {
 	users := make([]User, len(userdtos))
 
-	for _, user := range userdtos {
-		users = append(users, ToUser(user))
+	for i, user := range userdtos {
+		users[i] = ToUser(user)
 	}
 	return users
 }
@@ -35,8 +35,8 @@ func ToUsers(userdtos []UserDto) []User {
 func ToUserDtos(users []User) []UserDto {
 	userdtos := make([]UserDto, len(users))
 
-	for _, user := range users {
-		userdtos = append(userdtos, ToUserDto(user))
+	for i, user := range users {
+		userdtos[i] = ToUserDto(user)
 	}
 	return userdtos
 }
