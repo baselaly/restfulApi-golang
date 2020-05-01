@@ -16,6 +16,6 @@ import (
 func InitUserApi(db *gorm.DB) user.UserApi {
 	userRepository := user.ProvideUserRepository(db)
 	userService := user.ProvideUserService(userRepository)
-	userApi := user.ProvideUserApi(userService)
+	userApi := user.ProvideUserAPI(userService)
 	return userApi
 }

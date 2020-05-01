@@ -27,6 +27,7 @@ func main() {
 	route := gin.Default()
 
 	route.GET("/users", userAPI.FindAll)
+	route.GET("/user/:id", userAPI.FindByID)
 
 	err := route.Run()
 	if err != nil {

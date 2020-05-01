@@ -1,5 +1,6 @@
 package user
 
+// UserService for connect repository with api
 type UserService struct {
 	UserRepository UserRepository
 }

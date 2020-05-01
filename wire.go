@@ -10,6 +10,6 @@ import (
 )
 
 func InitUserApi(db *gorm.DB) user.UserApi {
-	wire.Build(user.ProvideUserRepository, user.ProvideUserService, user.ProvideUserApi)
+	wire.Build(user.ProvideUserRepository, user.ProvideUserService, user.ProvideUserAPI)
 	return user.UserApi{}
 }
