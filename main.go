@@ -12,7 +12,7 @@ import (
 func initDB() *gorm.DB {
 	db, err := gorm.Open("mysql", "root@/gorest?parseTime=true")
 	if err != nil {
-		log.Fatalln("err")
+		log.Fatalln(err)
 	}
 	db.AutoMigrate(&user.User{})
 	return db
@@ -29,6 +29,7 @@ func main() {
 	route.GET("/users", userAPI.FindAll)
 	route.GET("/user/:id", userAPI.FindByID)
 	route.POST("/user/create", userAPI.Create)
+	route.DELETE("/user/delete/:id", userAPI.Delete)
 
 	err := route.Run()
 	if err != nil {

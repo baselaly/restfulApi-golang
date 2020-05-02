@@ -57,3 +57,21 @@ func (userApi *UserApi) Create(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"user": newUser})
 }
+
+// Delete to delete user by id
+func (userApi *UserApi) Delete(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		return
+	}
+
+	state, err := userApi.userService.Delete(id)
+
+	if err != nil && state == false {
+		c.JSON(http.StatusNotFound, gin.H{"message": "cant found record to delete"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "User Deleted Successfully"})
+}

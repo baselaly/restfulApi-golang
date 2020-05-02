@@ -17,7 +17,7 @@ func (userService *UserService) GetAll() []User {
 	return userService.UserRepository.FindAll()
 }
 
-func (userService *UserService) Delete(id int) bool {
+func (userService *UserService) Delete(id int) (bool, error) {
 	return userService.UserRepository.Delete(id)
 }
 

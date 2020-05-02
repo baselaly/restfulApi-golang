@@ -38,8 +38,11 @@ func (u *UserRepository) Create(user User) (User, error) {
 	return user, nil
 }
 
-func (u *UserRepository) Delete(id int) bool {
-	user, _ := u.FindByID(id)
+func (u *UserRepository) Delete(id int) (bool, error) {
+	user, err := u.FindByID(id)
+	if err != nil {
+		return false, err
+	}
 	u.DB.Delete(&user)
-	return true
+	return true, nil
 }
