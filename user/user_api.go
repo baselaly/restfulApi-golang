@@ -38,7 +38,7 @@ func (userApi *UserApi) FindByID(c *gin.Context) {
 	}
 	user, err := userApi.userService.GetByID(id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "no record found"})
+		c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
@@ -52,7 +52,7 @@ func (userApi *UserApi) Create(c *gin.Context) {
 	user := User{Email: email, Password: string(hashBytes)}
 	newUser, err := userApi.userService.Create(user)
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": err})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"user": newUser})
@@ -62,14 +62,14 @@ func (userApi *UserApi) Create(c *gin.Context) {
 func (userApi *UserApi) Delete(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 
 	state, err := userApi.userService.Delete(id)
 
 	if err != nil && state == false {
-		c.JSON(http.StatusNotFound, gin.H{"message": "cant found record to delete"})
+		c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})
 		return
 	}
 
