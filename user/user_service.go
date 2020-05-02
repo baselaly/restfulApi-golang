@@ -9,14 +9,12 @@ func ProvideUserService(u UserRepository) UserService {
 	return UserService{UserRepository: u}
 }
 
-func (userService *UserService) GetByID(id int) User {
-	var user = userService.UserRepository.FindByID(id)
-	return user
+func (userService *UserService) GetByID(id int) (User, error) {
+	return userService.UserRepository.FindByID(id)
 }
 
 func (userService *UserService) GetAll() []User {
-	var users = userService.UserRepository.FindAll()
-	return users
+	return userService.UserRepository.FindAll()
 }
 
 func (userService *UserService) Delete(id int) bool {

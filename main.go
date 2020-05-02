@@ -10,7 +10,7 @@ import (
 )
 
 func initDB() *gorm.DB {
-	db, err := gorm.Open("mysql", "root@/gorest")
+	db, err := gorm.Open("mysql", "root@/gorest?parseTime=true")
 	if err != nil {
 		log.Fatalln("err")
 	}

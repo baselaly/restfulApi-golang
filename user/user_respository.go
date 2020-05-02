@@ -1,6 +1,8 @@
 package user
 
 import (
+	"errors"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -19,10 +21,13 @@ func (u *UserRepository) FindAll() []User {
 	return users
 }
 
-func (u *UserRepository) FindByID(id int) User {
+func (u *UserRepository) FindByID(id int) (User, error) {
 	var user User
-	u.DB.First(&user, id)
-	return user
+	record := u.DB.First(&user, id).RecordNotFound()
+	if record {
+		return User{}, errors.New("no records found")
+	}
+	return user, nil
 }
 
 func (u *UserRepository) Create(user User) (User, error) {
@@ -34,7 +39,7 @@ func (u *UserRepository) Create(user User) (User, error) {
 }
 
 func (u *UserRepository) Delete(id int) bool {
-	user := u.FindByID(id)
+	user, _ := u.FindByID(id)
 	u.DB.Delete(&user)
 	return true
 }

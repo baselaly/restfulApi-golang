@@ -1,7 +1,6 @@
 package user
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -22,16 +21,26 @@ func ProvideUserAPI(u UserService) UserApi {
 // FindAll to get all users
 func (userApi *UserApi) FindAll(c *gin.Context) {
 	users := userApi.userService.GetAll()
-	c.JSON(http.StatusOK, gin.H{"users": users})
+	var _users []TransformedUser
+
+	for _, user := range users {
+		_users = append(_users, TransformedUser{ID: user.ID, Email: user.Email})
+	}
+	c.JSON(http.StatusOK, gin.H{"users": _users})
 }
 
 // FindByID to get Single User
 func (userApi *UserApi) FindByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		log.Fatalln(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err})
+		return
 	}
-	user := userApi.userService.GetByID(id)
+	user, err := userApi.userService.GetByID(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "no record found"})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
 }
 
